@@ -1,0 +1,71 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Device {
+  id                String   @id @default(cuid())
+  name              String
+  deviceKey         String   @unique // 设备鉴权密钥
+  wechatPaymentLink String?  // 微信支付链接
+  alipayPaymentLink String?  // 支付宝支付链接
+  enabled           Boolean  @default(true)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  orders            Order[]
+}
+
+model Order {
+  id            String    @id @default(cuid())
+  orderNo       String    @unique
+  deviceId      String
+  device        Device    @relation(fields: [deviceId], references: [id])
+  userId        String
+  type          String    @default("wechat") // wechat, alipay
+  expectedAmount Float
+  actualAmount  Float
+  status        String    @default("pending") // pending, success, expired, cancelled
+  serviceFee    Float
+  webhookUrl    String?   // webhook 通知地址
+  metadata      String?   // 元数据 (JSON string)
+  createdAt     DateTime  @default(now())
+  expiredAt     DateTime
+  paidAt        DateTime?
+}
+
+model ApiKey {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  name      String
+  enabled   Boolean  @default(true)
+  createdAt DateTime @default(now())
+}
+
+model GlobalSettings {
+  id    String @id @default(cuid())
+  key   String @unique
+  value String
+}
+
+model ReportLog {
+  id          String   @id @default(cuid())
+  deviceId    String
+  type        String   // wechat, alipay
+  amount      Float
+  orderNo     String?  // 上报时传入的订单号
+  found       Boolean  // 是否找到对应订单
+  status      String   // success: 成功, not_found: 未找到, expired: 订单已过期
+  errorMsg    String?
+  createdAt   DateTime @default(now())
+}

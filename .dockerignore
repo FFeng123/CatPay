@@ -1,0 +1,43 @@
+# Git
+.git
+.gitignore
+
+# Node
+node_modules
+npm-debug.log
+
+# Next.js
+.next
+out
+
+# Development
+.env*.local
+.env.development.local
+.env.test.local
+
+# Database
+*.db
+*.db-journal
+prisma/migrations
+
+# IDE
+.idea
+.vscode
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build
+dist
+build
+
+# Logs
+logs
+*.log
+
+# Test
+coverage
+.nyc_output
