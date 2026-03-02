@@ -1,8 +1,8 @@
 # 阶段 1: 安装依赖
 FROM node:20-alpine AS deps
 WORKDIR /app
-COPY package.json package-lock.json* ./
-RUN npm ci
+COPY package.json yarn.lock ./
+RUN yarn install --frozen-lockfile
 
 # 阶段 2: 构建应用
 FROM node:20-alpine AS builder
@@ -10,7 +10,7 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 RUN npx prisma generate
-RUN npm run build
+RUN yarn build
 
 # 阶段 3: 运行应用
 FROM node:20-alpine AS runner
