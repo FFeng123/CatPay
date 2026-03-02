@@ -28,9 +28,6 @@ COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
 COPY --from=builder /app/prisma ./prisma
 
-# 复制环境变量文件
-COPY --from=builder /app/.env ./.env
-
 USER nextjs
 
 EXPOSE 3000
