@@ -1,6 +1,6 @@
 # CatPay
 
-<img src="./README.assets/ChatGPT Image 2026年3月2日 20_58_44 拷贝.png" alt="ChatGPT Image 2026年3月2日 20_58_44 拷贝" style="zoom: 50%;" />
+<img src="./README.assets/logo.png" alt="ChatGPT Image 2026年3月2日 20_58_44 拷贝" style="zoom: 50%;" />
 
 <p  align="center">一个轻量级的免签个人支付，支持微信支付和支付宝，配套设备监控服务。</p>
 
